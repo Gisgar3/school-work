@@ -10,9 +10,10 @@ import java.util.*;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 
 public class loader {
+
+    public static JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
     public static void main(String[] args) {
         System.out.println("Input a valid file-system path to compile Java class.");
@@ -26,9 +27,8 @@ public class loader {
                 for (File file: filepath.listFiles()) {
                     if (file.getName().endsWith(".java")) {
                         System.out.println("\n" + file.getName());
-                    }
-                    else {
-                        System.out.println("\nNo valid Java class files exist in this directory; cancelling operation.");
+                        compiler.run(null, null, null, filepath + "\\" + file.getName());
+                        System.out.format("%s has been compiled successfully.\n", file.getName());
                     }
                 }
             }
